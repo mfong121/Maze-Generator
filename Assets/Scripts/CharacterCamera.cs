@@ -16,7 +16,7 @@ namespace FongMichael.Lab3
 
         InputAction rotatePlayerCameraAction;
 
-
+        Vector2 oldMousePos, newMousePos, deltaMousePos;
 
         public void initialize(InputAction rotatePlayerCameraAction)
         {
@@ -41,6 +41,17 @@ namespace FongMichael.Lab3
         public void rotatePlayerCameraActionPerformed(InputAction.CallbackContext obj)
         {
 
+            oldMousePos = newMousePos;
+            
+            newMousePos = rotatePlayerCameraAction.ReadValue<Vector2>();
+            deltaMousePos = newMousePos - oldMousePos;
+
+            character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, character.transform.rotation * Quaternion.Euler(0, deltaMousePos.x, 0), 360);
+            characterCamera.transform.Rotate(-deltaMousePos.y, deltaMousePos.x, 0);
+            Vector3 currentAngles = characterCamera.transform.rotation.eulerAngles;
+            characterCamera.transform.rotation = Quaternion.Euler(currentAngles.x, character.transform.rotation.eulerAngles.y, 0);
+            
+            /*Debug.Log("yDegree: " + yDegree);*/
         }
     }
 }
