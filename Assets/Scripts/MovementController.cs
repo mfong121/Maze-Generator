@@ -56,8 +56,12 @@ namespace FongMichael.Lab3
         {
             /*            characterToMove.transform.localPosition += new Vector3(movementVector.x * Time.deltaTime * moveSpeed, 0, movementVector.y * Time.deltaTime * moveSpeed); */
             Vector3 currentPos = characterToMove.transform.localPosition;
-            Vector2 currentMoveAction = movePlayerAction.ReadValue<Vector2>
-            characterToMove.transform.localPosition = Vector3.MoveTowards(currentPos, currentPos + new Vector3(), moveSpeed * Time.deltaTime);
+            Vector2 currentMoveAction = movePlayerAction.ReadValue<Vector2>();
+            
+            Vector3 desiredDirection = currentMoveAction.y*characterToMove.transform.forward + currentMoveAction.x*characterToMove.transform.right;
+
+
+            characterToMove.transform.localPosition = Vector3.MoveTowards(currentPos, currentPos + desiredDirection, moveSpeed * Time.deltaTime);
         }
         
         public void movePlayerActionPerformed(InputAction.CallbackContext obj)
