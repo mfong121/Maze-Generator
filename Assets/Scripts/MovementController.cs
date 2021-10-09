@@ -70,9 +70,9 @@ namespace FongMichael.Lab3
             /*            movementVector = Vector3.MoveTowards(characterToMove.transform.position,characterToMove.transform.position.,moveSpeed*Time.delta)*/
             movementVector = characterToMove.transform.forward * movementVector.y * moveSpeed + characterToMove.transform.right * movementVector.x * moveSpeed;
 
-            Debug.Log("MovePlayerAction.ReadValue: " + movePlayerAction.ReadValue<Vector2>());
-/*            Debug.Log("characterToMove.Transform.right: " + characterToMove.transform.right);
-*/            Debug.Log("characterToMove.Transform.forward: " + characterToMove.transform.forward);
+/*            Debug.Log("MovePlayerAction.ReadValue: " + movePlayerAction.ReadValue<Vector2>());
+            Debug.Log("characterToMove.Transform.right: " + characterToMove.transform.right);
+            Debug.Log("characterToMove.Transform.forward: " + characterToMove.transform.forward);*/
 
         }
 

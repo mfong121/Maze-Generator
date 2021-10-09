@@ -28,6 +28,9 @@ namespace FongMichael.Lab3
 
         [SerializeField]
         Transform floorPrefab;
+        
+        [SerializeField]
+        Transform coinPrefab;
 
 /*        Vector3 StartPosition = new Vector3(-width * cellSize / 2 + cellSize, 1, -height * cellSize / 2 + cellSize);*/
 

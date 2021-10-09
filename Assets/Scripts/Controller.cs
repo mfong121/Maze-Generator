@@ -7,7 +7,6 @@ namespace FongMichael.Lab3
 
     public class Controller : MonoBehaviour
     {
-        //TODO: Implement character placement and controls
         public bool rotationOn = false;
         [SerializeField]
         [Range(0, 1f)]
@@ -26,6 +25,8 @@ namespace FongMichael.Lab3
         CharacterCamera characterCamera;
 
         private ControlScheme inputScheme;
+
+        private int numCoins = 0;
  
 
         // Start is called before the first frame update
@@ -62,6 +63,12 @@ namespace FongMichael.Lab3
             {
                 mazeRenderer.transform.Rotate(new Vector3(0,rotationSpeed,0));
             }
+        }
+
+        public void addCoin()
+        {
+            numCoins++;
+            Debug.Log("Coins collected: " + numCoins);
         }
     }
 }
