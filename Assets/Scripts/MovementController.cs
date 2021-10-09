@@ -54,17 +54,21 @@ namespace FongMichael.Lab3
         // Update is called once per frame
         void Update()
         {
-            characterToMove.transform.localPosition += new Vector3(movementVector.x * Time.deltaTime*moveSpeed, 0, movementVector.y * Time.deltaTime*moveSpeed);
+            /*            characterToMove.transform.localPosition += new Vector3(movementVector.x * Time.deltaTime * moveSpeed, 0, movementVector.y * Time.deltaTime * moveSpeed); */
+            Vector3 currentPos = characterToMove.transform.localPosition;
+            Vector2 currentMoveAction = movePlayerAction.ReadValue<Vector2>
+            characterToMove.transform.localPosition = Vector3.MoveTowards(currentPos, currentPos + new Vector3(), moveSpeed * Time.deltaTime);
         }
         
         public void movePlayerActionPerformed(InputAction.CallbackContext obj)
         {
             movementVector = movePlayerAction.ReadValue<Vector2>();
-            /*            movementVector = characterToMove.transform.forward * movementVector.x * moveSpeed+ characterToMove.transform.right * movementVector.y * moveSpeed;*/
-            
-/*            Debug.Log("MovePlayerAction.ReadValue: " + movePlayerAction.ReadValue<Vector2>());
-            Debug.Log("characterToMove.Transform.right: " + characterToMove.transform.right);
-            Debug.Log("characterToMove.Transform.forward: " + characterToMove.transform.forward);*/
+            /*            movementVector = Vector3.MoveTowards(characterToMove.transform.position,characterToMove.transform.position.,moveSpeed*Time.delta)*/
+            movementVector = characterToMove.transform.forward * movementVector.y * moveSpeed + characterToMove.transform.right * movementVector.x * moveSpeed;
+
+            Debug.Log("MovePlayerAction.ReadValue: " + movePlayerAction.ReadValue<Vector2>());
+/*            Debug.Log("characterToMove.Transform.right: " + characterToMove.transform.right);
+*/            Debug.Log("characterToMove.Transform.forward: " + characterToMove.transform.forward);
 
         }
 
