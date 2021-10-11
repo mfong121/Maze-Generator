@@ -47,7 +47,7 @@ namespace FongMichael.Lab3
             sprintAction.started += sprintPlayerActionStarted;
             sprintAction.canceled += sprintPlayerActionCancelled;
 
-            characterToMove.transform.position = new Vector3(-mazeRenderer.width*mazeRenderer.cellSize/2 + mazeRenderer.cellSize/2,1,-mazeRenderer.height*mazeRenderer.cellSize/2+mazeRenderer.cellSize/2);
+            characterToMove.transform.position = new Vector3(-mazeRenderer.width*mazeRenderer.cellSize/2 + mazeRenderer.cellSize/2,2,-mazeRenderer.height*mazeRenderer.cellSize/2+mazeRenderer.cellSize/2);
                 /*-width*cellSize / 2 + i*cellSize+cellSize/2, 1, -height*cellSize / 2 + j*cellSize+cellSize/2*/
         }
 

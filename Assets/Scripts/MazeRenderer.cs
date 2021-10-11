@@ -18,7 +18,11 @@ namespace FongMichael.Lab3
 
         [SerializeField]
         [Range(0,100)]
-        int litWallChance;
+        private int litWallChance;
+
+        [SerializeField]
+        [Range(0,100)]
+        private int coinChance;
 
         [SerializeField]
         Transform wallPrefab;
@@ -32,15 +36,90 @@ namespace FongMichael.Lab3
         [SerializeField]
         Transform coinPrefab;
 
+        [SerializeField]
+        Transform goalPrefab;
+
+        private int numCoins;
+        private bool gameWin;
+
 /*        Vector3 StartPosition = new Vector3(-width * cellSize / 2 + cellSize, 1, -height * cellSize / 2 + cellSize);*/
 
         // Start is called before the first frame update
         void Start()
         {
+            numCoins = 0;
+            gameWin= false;
             NodeWalls[,] maze = MazeGenerator.GenerateMaze(width, height);
-            Draw(maze);   
+            placeCoins(maze);
+            Draw(maze);
+            addGoal();
         }
 
+        private void addGoal()
+        {
+            var position = new Vector3(-width * cellSize / 2 + width-1 * cellSize + cellSize / 2, .05f, -height * cellSize / 2 + height-1 * cellSize + cellSize / 2);
+            Transform richard_parker = Instantiate(goalPrefab, transform);
+            richard_parker.GetComponent<WinCondition>().initialize(this);
+
+            richard_parker.position = position;
+        }
+        private void placeCoins(NodeWalls[,] maze)
+        {
+            var rand = new System.Random();
+            //Create coin prefab
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    NodeWalls currentNode = maze[i, j];
+                    int numWalls = 0;
+                    if (currentNode.HasFlag(NodeWalls.UP))
+                    {
+                        numWalls++;
+                    }
+                    if (currentNode.HasFlag(NodeWalls.DOWN))
+                    {
+                        numWalls++;
+                    }
+                    if (currentNode.HasFlag(NodeWalls.LEFT))
+                    {
+                        numWalls++;
+                    }
+                    if (currentNode.HasFlag(NodeWalls.RIGHT))
+                    {
+                        numWalls++;
+                    }
+
+                    var position = new Vector3(-width * cellSize / 2 + i * cellSize + cellSize / 2, .25f, -height * cellSize / 2 + j * cellSize + cellSize / 2);
+
+                    if (numWalls >= 3)
+                    {
+
+                        Transform coin = Instantiate(coinPrefab, transform);
+                        coin.GetComponent<CoinCollectible>().initialize(this);
+                        coin.position = position;
+                        currentNode |= ~NodeWalls.COIN_PLACED;
+                        
+                    }
+
+
+                    if (!currentNode.HasFlag(NodeWalls.COIN_PLACED) && rand.Next(0, 100) <= coinChance)
+                    {
+                        currentNode |= ~NodeWalls.COIN_PLACED;
+                        Transform coin = Instantiate(coinPrefab, transform);
+                        coin.GetComponent<CoinCollectible>().initialize(this);
+                        coin.position = position;
+                        
+                    }
+
+
+
+
+                }
+            }
+
+           
+        }
         private void Draw(NodeWalls[,] maze)
         {
             var rand = new System.Random();
@@ -75,7 +154,7 @@ namespace FongMichael.Lab3
 
                         topWall.position = position + new Vector3(0, 0, cellSize / 2);
                         topWall.localScale = new Vector3(cellSize, topWall.localScale.y,topWall.localScale.z);
-                        topWall.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1, 2 / cellSize);
+                        topWall.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1, 2 / cellSize); //Sets "stretching" of the prefabs nicely
                     }
 
                     if (node.HasFlag(NodeWalls.LEFT))
@@ -135,6 +214,27 @@ namespace FongMichael.Lab3
                     }
                 }
             }
+        }
+        public void addCoin()
+        {
+            numCoins++;
+            Debug.Log("Coins collected: " + numCoins);
+        }
+        public int getCoins()
+        {
+            return numCoins;
+        }
+
+        private void OnGUI()
+        {
+            if (gameWin)
+            {
+                GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 50, 200, 200), "Game Over:\nYou caught Richard Parker!\nWith a final score of " + getCoins() + ".");
+            }
+        }
+        public void win()
+        {
+            gameWin = true;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace FongMichael.Lab3
         DOWN = 8,   //1000
 
         VISITED = 128, //1000 0000
+        COIN_PLACED = 64 //0100 0000
+        
     }
     //can use maze[i,j].HasFlag(NodeWalls.DIRECTION) to instantiate prefabs
     public struct NodePosition

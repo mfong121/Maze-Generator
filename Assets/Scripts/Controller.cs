@@ -25,8 +25,6 @@ namespace FongMichael.Lab3
         CharacterCamera characterCamera;
 
         private ControlScheme inputScheme;
-
-        private int numCoins = 0;
  
 
         // Start is called before the first frame update
@@ -49,12 +47,14 @@ namespace FongMichael.Lab3
 
         private void OnGUI()
         {
-            GUI.Label(new Rect(20, 20, 300, 300), "Controls:\nESC to quit\nC to swap cameras\n0 to rotate maze");
+            //0 for rotating maze
+            GUI.Label(new Rect(20, 20, 300, 300), "Controls:\nESC to quit\nC to swap cameras\nWASD, Arrow keys, or Left Stick to move\nSHIFT to sprint");
+            GUI.Label(new Rect(Screen.width-100, 20, 50, 50), "Score: " + mazeRenderer.getCoins());
         }
 
         void toggleRotatePerformed(InputAction.CallbackContext obj)
         {
-           rotationOn = !rotationOn;
+           /*rotationOn = !rotationOn;*/ //disable rotation for lab3
         }
 
         void Update()
@@ -65,10 +65,9 @@ namespace FongMichael.Lab3
             }
         }
 
-        public void addCoin()
+/*        public void win()
         {
-            numCoins++;
-            Debug.Log("Coins collected: " + numCoins);
-        }
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 50, 100, 100), "Game Over:\nYou caught Richard Parker!\nYou had a final score of " + mazeRenderer.getCoins() + ".");
+        }*/
     }
 }

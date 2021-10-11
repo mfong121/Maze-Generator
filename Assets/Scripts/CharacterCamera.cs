@@ -46,7 +46,7 @@ namespace FongMichael.Lab3
             newMousePos = rotatePlayerCameraAction.ReadValue<Vector2>();
             deltaMousePos = newMousePos - oldMousePos;
 
-            character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, character.transform.rotation * Quaternion.Euler(0, deltaMousePos.x, 0), 360);
+            character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, character.transform.rotation * Quaternion.Euler(0, deltaMousePos.x, 0), 0.5f);
             characterCamera.transform.Rotate(-deltaMousePos.y, deltaMousePos.x, 0);
             Vector3 currentAngles = characterCamera.transform.rotation.eulerAngles;
             characterCamera.transform.rotation = Quaternion.Euler(currentAngles.x, character.transform.rotation.eulerAngles.y, 0);
